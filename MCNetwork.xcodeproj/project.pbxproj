@@ -16,7 +16,10 @@
 		C39C35C517A7D1360014A311 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C39C35BE17A7D1360014A311 /* Default-568h@2x.png */; };
 		C39C35C617A7D1360014A311 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C39C35BF17A7D1360014A311 /* Default.png */; };
 		C39C35C717A7D1360014A311 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C39C35C017A7D1360014A311 /* Default@2x.png */; };
-		C39C35C817A7D1360014A311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39C35C217A7D1360014A311 /* Main.storyboard */; };
+		C39C35CC17A7D4610014A311 /* MCRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C39C35CB17A7D4610014A311 /* MCRequestOperation.m */; };
+		C39C35CF17A7D6C50014A311 /* MCNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = C39C35CE17A7D6C50014A311 /* MCNetwork.m */; };
+		C39C35D117A7DA560014A311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C39C35D017A7DA560014A311 /* Main.storyboard */; };
+		C39C35D617A7F9720014A311 /* SHXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C39C35D517A7F9720014A311 /* SHXMLParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +37,13 @@
 		C39C35BE17A7D1360014A311 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C39C35BF17A7D1360014A311 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C39C35C017A7D1360014A311 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		C39C35C217A7D1360014A311 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C39C35CA17A7D4610014A311 /* MCRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCRequestOperation.h; sourceTree = "<group>"; };
+		C39C35CB17A7D4610014A311 /* MCRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCRequestOperation.m; sourceTree = "<group>"; };
+		C39C35CD17A7D6C50014A311 /* MCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCNetwork.h; sourceTree = "<group>"; };
+		C39C35CE17A7D6C50014A311 /* MCNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCNetwork.m; sourceTree = "<group>"; };
+		C39C35D017A7DA560014A311 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C39C35D417A7F9720014A311 /* SHXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHXMLParser.h; sourceTree = "<group>"; };
+		C39C35D517A7F9720014A311 /* SHXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHXMLParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +90,7 @@
 		C39C359717A7D0880014A311 /* MCNetwork */ = {
 			isa = PBXGroup;
 			children = (
+				C39C35C917A7D40D0014A311 /* MCNetwork */,
 				C39C35B717A7D1360014A311 /* Controllers */,
 				C39C35BA17A7D1360014A311 /* Delegate */,
 				C39C35BD17A7D1360014A311 /* Resources */,
@@ -131,9 +141,39 @@
 		C39C35C117A7D1360014A311 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				C39C35C217A7D1360014A311 /* Main.storyboard */,
+				C39C35D017A7DA560014A311 /* Main.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		C39C35C917A7D40D0014A311 /* MCNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				C39C35D217A7F9710014A311 /* Libs */,
+				C39C35CD17A7D6C50014A311 /* MCNetwork.h */,
+				C39C35CE17A7D6C50014A311 /* MCNetwork.m */,
+				C39C35CA17A7D4610014A311 /* MCRequestOperation.h */,
+				C39C35CB17A7D4610014A311 /* MCRequestOperation.m */,
+			);
+			name = MCNetwork;
+			path = Libs/MCNetwork;
+			sourceTree = "<group>";
+		};
+		C39C35D217A7F9710014A311 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				C39C35D317A7F9720014A311 /* SHXMLParser */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		C39C35D317A7F9720014A311 /* SHXMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				C39C35D417A7F9720014A311 /* SHXMLParser.h */,
+				C39C35D517A7F9720014A311 /* SHXMLParser.m */,
+			);
+			path = SHXMLParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,7 +230,7 @@
 				C39C35C517A7D1360014A311 /* Default-568h@2x.png in Resources */,
 				C39C35C617A7D1360014A311 /* Default.png in Resources */,
 				C39C35C717A7D1360014A311 /* Default@2x.png in Resources */,
-				C39C35C817A7D1360014A311 /* Main.storyboard in Resources */,
+				C39C35D117A7DA560014A311 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +244,9 @@
 				C39C359E17A7D0880014A311 /* main.m in Sources */,
 				C39C35C317A7D1360014A311 /* ViewController.m in Sources */,
 				C39C35C417A7D1360014A311 /* AppDelegate.m in Sources */,
+				C39C35CC17A7D4610014A311 /* MCRequestOperation.m in Sources */,
+				C39C35CF17A7D6C50014A311 /* MCNetwork.m in Sources */,
+				C39C35D617A7F9720014A311 /* SHXMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +319,7 @@
 				INFOPLIST_FILE = "MCNetwork/MCNetwork-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -288,6 +332,7 @@
 				INFOPLIST_FILE = "MCNetwork/MCNetwork-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
