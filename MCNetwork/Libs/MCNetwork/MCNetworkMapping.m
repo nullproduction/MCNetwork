@@ -57,7 +57,7 @@
  */
 + (id)handlerClass:(NSString *)class method:(NSString *)method arg:(id)arg
 {
-    __unsafe_unretained id result;
+    __unsafe_unretained id returnValue;
     SEL selector = NSSelectorFromString(method);
     NSMethodSignature* signature = [NSClassFromString(class) methodSignatureForSelector: selector];
     NSInvocation* invocation = [NSInvocation invocationWithMethodSignature: signature];
@@ -65,8 +65,8 @@
     [invocation setTarget:NSClassFromString(class)];
     [invocation setArgument:&arg atIndex:2];
     [invocation invoke];
-    [invocation getReturnValue:&result];
-    return result;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
 }
 
 @end

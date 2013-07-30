@@ -96,19 +96,26 @@
     // JSON
     if (_type == MCNetworkJSON)
     {
+        TICK;
         _responseDictionary = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:nil];
+        TOCK;
     }
     
+    // TODO: cлишком долго занимает маппинг, нужнос сравнить с аналогами
     // XML
     if (_type == MCNetworkXML)
     {
+        TICK;
         _responseDictionary = [[[SHXMLParser alloc] init] parseData:_responseData];
+        TOCK;
     }
     
     // Mapping
     if (_mapping)
     {
-        _responseDictionaryConvert = [MCNetworkMapping convert:_responseDictionary withMapping:_mapping];
+        TICK;
+        _responseMapping = [MCNetworkMapping convert:_responseDictionary withMapping:_mapping];
+        TOCK;
     }
 }
 

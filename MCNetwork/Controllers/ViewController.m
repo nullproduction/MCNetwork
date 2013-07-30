@@ -20,7 +20,9 @@
     //[self loadSyncRSS];
     
     // Load ASync RSS
-    [self loadAsyncRSS];
+    //[self loadAsyncRSS];
+    
+    [self loadJson];
     
     // Load two request
     //[self loadTwoRequest];
@@ -51,7 +53,7 @@
     operation.type = MCNetworkXML;
     operation.mapping = self.rssMapping;
     operation.success = ^(MCRequestOperation *operation) {
-        NSLog(@"%@", operation.responseDictionaryConvert[0][@"title"]);
+        NSLog(@"%@", operation.responseMapping[0][@"title"]);
     };
     operation.failure = ^(NSError *error) {
         NSLog(@"Error: %@", error);
@@ -59,6 +61,22 @@
     [operation sendAsync];
 }
 
+
+/*
+ * Load JSON
+ */
+- (void)loadJson
+{
+    MCRequestOperation *operation = [MCRequestOperation initWithURLString:@"http://itunes.apple.com/ru/rss/toppodcasts/limit=300/json"];
+    operation.type = MCNetworkJSON;
+    operation.success = ^(MCRequestOperation *operation) {
+        //NSLog(@"%@", operation.responseDictionary);
+    };
+    operation.failure = ^(NSError *error) {
+        NSLog(@"Error: %@", error);
+    };
+    [operation sendAsync];
+}
 
 /*
  * Load Two Request Async

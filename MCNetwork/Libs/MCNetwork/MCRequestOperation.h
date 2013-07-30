@@ -2,6 +2,9 @@
 //  MCRequestOperation.h
 //
 
+#define TICK   NSDate *startTime = [NSDate date]
+#define TOCK   NSLog(@"Time: %f", -[startTime timeIntervalSinceNow])
+
 #import "SHXMLParser.h"
 #import "MCNetworkMapping.h"
 
@@ -27,7 +30,7 @@ typedef void(^MCNetworkFailureBlock)(NSError *error);
 @property (nonatomic, retain) NSData *responseData;
 @property (nonatomic, retain) NSString *responseString;
 @property (nonatomic, retain) NSDictionary *responseDictionary;
-@property (nonatomic, retain) NSArray *responseDictionaryConvert;
+@property (nonatomic, retain) NSArray *responseMapping;
 @property (nonatomic, retain) NSDictionary *mapping;
 @property (nonatomic, readwrite) Type type;
 @property (nonatomic, copy) MCNetworkSuccessBlock success;
