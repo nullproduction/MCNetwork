@@ -41,11 +41,15 @@
             // Response Data
             _responseData = data;
             
-            // Handler
-            [self handler];
-            
-            // Success
-            _success(self);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+                // Handler
+                [self handler];
+                
+                // Success
+                dispatch_async(dispatch_get_main_queue(),^{
+                    _success(self);
+                });
+            });
         }
         else
         {
@@ -99,6 +103,12 @@
     if (_type == MCNetworkXML)
     {
         _responseDictionary = [[[SHXMLParser alloc] init] parseData:_responseData];
+    }
+    
+    // Mapping
+    if (_mapping)
+    {
+        _responseDictionaryConvert = [MCNetworkMapping convert:_responseDictionary withMapping:_mapping];
     }
 }
 

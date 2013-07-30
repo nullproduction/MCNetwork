@@ -14,19 +14,18 @@
 /*
  * Load
  */
-- (void)viewDidLoad
+- (void)viewDidAppear:(BOOL)animated
 {
-    // Super
-    [super viewDidLoad];
-    
     // Load Sync RSS
     //[self loadSyncRSS];
     
     // Load ASync RSS
-    //[self loadAsyncRSS];
+    [self loadAsyncRSS];
     
     // Load two request
-    [self loadTwoRequest];
+    //[self loadTwoRequest];
+    //[self loadTwoRequestAsync];
+    
 }
 
 
@@ -49,8 +48,10 @@
 - (void)loadAsyncRSS
 {
     MCRequestOperation *operation = [MCRequestOperation initWithURLString:kRSSURLString];
+    operation.type = MCNetworkXML;
+    operation.mapping = self.rssMapping;
     operation.success = ^(MCRequestOperation *operation) {
-        NSLog(@"sendAsync - %@", operation.responseString);
+        NSLog(@"%@", operation.responseDictionaryConvert[0][@"title"]);
     };
     operation.failure = ^(NSError *error) {
         NSLog(@"Error: %@", error);
@@ -58,6 +59,16 @@
     [operation sendAsync];
 }
 
+
+/*
+ * Load Two Request Async
+ */
+- (void)loadTwoRequestAsync
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+        [self loadTwoRequest];
+    });
+}
 
 /*
  * Load Two Request
@@ -82,9 +93,63 @@
     [operation sendSync];
     
     // Copyright
-    NSString *copyright = operation.responseDictionary[@"rss"][@"channel"][@"C"];
+    NSString *copyright = operation.responseDictionary[@"rss"][@"channel"][@"copyright"];
     NSLog(@"%@", copyright);
 }
 
+/*
+ * Mapping
+ */
+- (NSDictionary *)rssMapping
+{
+    return @{
+     @"path": @"rss.channel.item",
+     @"attributes": @{
+             @"title": @{
+                     @"path": @"title"
+                     },
+             @"link": @{
+                     @"path": @"link"
+                     },
+             @"pubDate": @{
+                     @"path": @"pubDate",
+                     @"handler": @{
+                             @"class": @"ViewController",
+                             @"method": @"dateForRssDate:"
+                             }
+                     },
+             @"desc": @{
+                     @"path": @"description"
+                     },
+             @"enclosureUrl": @{
+                     @"path": @"enclosure.url"
+                     },
+             @"enclosureType": @{
+                     @"path": @"enclosure.type"
+                     },
+             @"enclosureLength": @{
+                     @"path": @"enclosure.length"
+                     },
+             @"duration": @{
+                     @"path": @"itunes:duration"
+                     },
+             @"imageURL": @{
+                     @"path": @"itunes:image.href"
+                     },
+             }
+     };
+}
+
+
+/*
+ * Date For Rss Date
+ */
++ (NSDate *)dateForRssDate:(NSString *)rssDate
+{
+    NSString *dateFormat = @"EEE, dd MMMM yyyy HH:mm:ss Z";
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:dateFormat];
+    return [dateFormatter dateFromString:rssDate];
+}
 
 @end
