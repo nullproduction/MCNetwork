@@ -1,18 +1,18 @@
 //
-//  MCRequestOperation.m
+//  MCNetworkOperation.m
 //
 
-#import "MCRequestOperation.h"
+#import "MCNetworkOperation.h"
 
-@implementation MCRequestOperation
+@implementation MCNetworkOperation
 
 
 /*
  * Init with URLString
  */
-+ (MCRequestOperation *)initWithURLString: (NSString *)URLString
++ (MCNetworkOperation *)initWithURLString: (NSString *)URLString
 {
-    MCRequestOperation *operation = [[MCRequestOperation alloc] init];
+    MCNetworkOperation *operation = [[MCNetworkOperation alloc] init];
     operation.URLString = URLString;
     return operation;
 }
@@ -24,7 +24,7 @@
 - (void)sendAsync
 {
     // URL
-    _URL = [NSURL URLWithString:_URLString];
+    if(_URLString) _URL = [NSURL URLWithString:_URLString];
     
     // Request
     NSURLRequest *request = [NSURLRequest requestWithURL:_URL];
@@ -41,15 +41,12 @@
             // Response Data
             _responseData = data;
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-                // Handler
-                [self handler];
+            // Handlers
+            [self handlers];
                 
-                // Success
-                dispatch_async(dispatch_get_main_queue(),^{
-                    _success(self);
-                });
-            });
+            // Success
+            _success(self);
+     
         }
         else
         {
@@ -66,7 +63,7 @@
 - (void)sendSync
 {
     // URL
-    _URL = [NSURL URLWithString:_URLString];
+    if(_URLString) _URL = [NSURL URLWithString:_URLString];
     
     // Request
     NSURLRequest *request = [NSURLRequest requestWithURL:_URL];
@@ -80,21 +77,21 @@
     // Send Synchronous Request
     _responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    // Handler
-    [self handler];
+    // Handlers
+    [self handlers];
 }
 
 
 /*
  * Handler
  */
-- (void)handler
+- (void)handlers
 {
     // Response String
     _responseString = [[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding];
     
     // JSON
-    if (_type == MCNetworkJSON)
+    if (_handler == MCNetworkJSON)
     {
         _responseDictionary = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:nil];
     }

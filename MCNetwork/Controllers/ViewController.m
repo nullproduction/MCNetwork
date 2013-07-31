@@ -39,7 +39,7 @@
  */
 - (void)loadSyncRSS
 {
-    MCRequestOperation *operation = [[MCRequestOperation alloc] init];
+    MCNetworkOperation *operation = [[MCNetworkOperation alloc] init];
     operation.URLString = kRSSURLString;
     [operation sendSync];
     
@@ -52,20 +52,20 @@
  */
 - (void)loadAsyncRSS
 {
-    MCRequestOperation *operation = [MCRequestOperation initWithURLString:kRSSURLString];
-    operation.success = ^(MCRequestOperation *operation) {
+    MCNetworkOperation *operation = [MCNetworkOperation initWithURLString:kRSSURLString];
+    operation.success = ^(MCNetworkOperation *operation) {
         TICK;
         RXMLElement *rootRSS = [RXMLElement elementFromXMLData:operation.responseData];
-        
         NSMutableArray *result = [NSMutableArray array];
-        NSArray* items = [[rootRSS child:@"channel"] children:@"item"];
-        for (RXMLElement *item in items) {
+        
+        [rootRSS iterate:@"channel.item" usingBlock: ^(RXMLElement *item) {
             [result addObject:@{
-                @"title": [item child:@"title"].text,
-                @"link": [item child:@"link"].text,
-                @"description": [item child:@"description"].text,
-            }];
-        }
+                 @"title": [item child:@"title"].text,
+                 @"link": [item child:@"link"].text,
+                 @"description": [item child:@"description"].text,
+             }];
+        }];
+        
         NSLog(@"%@", result[0][@"title"]);
         TOCK;
     };
@@ -78,9 +78,9 @@
  */
 - (void)loadJson
 {
-    MCRequestOperation *operation = [MCRequestOperation initWithURLString:@"http://itunes.apple.com/ru/rss/toppodcasts/limit=300/json"];
-    operation.type = MCNetworkJSON;
-    operation.success = ^(MCRequestOperation *operation) {
+    MCNetworkOperation *operation = [MCNetworkOperation initWithURLString:@"http://itunes.apple.com/ru/rss/toppodcasts/limit=300/json"];
+    operation.handler = MCNetworkJSON;
+    operation.success = ^(MCNetworkOperation *operation) {
         //NSLog(@"%@", operation.responseDictionary);
     };
     operation.failure = ^(NSError *error) {

@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C39ACBC317A8ECE500253062 /* SHXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C39ACBB817A8ECE500253062 /* SHXMLParser.m */; };
-		C39ACBC517A8ECE500253062 /* MCRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C39ACBBD17A8ECE500253062 /* MCRequestOperation.m */; };
 		C39ACBC717A8ECE500253062 /* RXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C39ACBC217A8ECE500253062 /* RXMLElement.m */; };
 		C39ACBC917A8EDC500253062 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39ACBC817A8EDC500253062 /* libz.dylib */; };
 		C39ACBCB17A8EDD100253062 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C39ACBCA17A8EDD100253062 /* libxml2.dylib */; };
+		C39ACBCE17A8FA2E00253062 /* MCNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C39ACBCD17A8FA2E00253062 /* MCNetworkOperation.m */; };
 		C39C359217A7D0880014A311 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39C359117A7D0880014A311 /* UIKit.framework */; };
 		C39C359417A7D0880014A311 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39C359317A7D0880014A311 /* Foundation.framework */; };
 		C39C359617A7D0880014A311 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39C359517A7D0880014A311 /* CoreGraphics.framework */; };
@@ -25,15 +24,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C39ACBB717A8ECE500253062 /* SHXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHXMLParser.h; sourceTree = "<group>"; };
-		C39ACBB817A8ECE500253062 /* SHXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHXMLParser.m; sourceTree = "<group>"; };
 		C39ACBB917A8ECE500253062 /* MCNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCNetwork.h; sourceTree = "<group>"; };
-		C39ACBBC17A8ECE500253062 /* MCRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCRequestOperation.h; sourceTree = "<group>"; };
-		C39ACBBD17A8ECE500253062 /* MCRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCRequestOperation.m; sourceTree = "<group>"; };
 		C39ACBC117A8ECE500253062 /* RXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXMLElement.h; sourceTree = "<group>"; };
 		C39ACBC217A8ECE500253062 /* RXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXMLElement.m; sourceTree = "<group>"; };
 		C39ACBC817A8EDC500253062 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		C39ACBCA17A8EDD100253062 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		C39ACBCC17A8FA2E00253062 /* MCNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCNetworkOperation.h; sourceTree = "<group>"; };
+		C39ACBCD17A8FA2E00253062 /* MCNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCNetworkOperation.m; sourceTree = "<group>"; };
 		C39C358E17A7D0880014A311 /* MCNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C39C359117A7D0880014A311 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C39C359317A7D0880014A311 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,29 +76,11 @@
 		C39ACBB417A8ECE500253062 /* MCNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				C39ACBB517A8ECE500253062 /* Libs */,
+				C39ACBCC17A8FA2E00253062 /* MCNetworkOperation.h */,
+				C39ACBCD17A8FA2E00253062 /* MCNetworkOperation.m */,
 				C39ACBB917A8ECE500253062 /* MCNetwork.h */,
-				C39ACBBC17A8ECE500253062 /* MCRequestOperation.h */,
-				C39ACBBD17A8ECE500253062 /* MCRequestOperation.m */,
 			);
 			path = MCNetwork;
-			sourceTree = "<group>";
-		};
-		C39ACBB517A8ECE500253062 /* Libs */ = {
-			isa = PBXGroup;
-			children = (
-				C39ACBB617A8ECE500253062 /* SHXMLParser */,
-			);
-			path = Libs;
-			sourceTree = "<group>";
-		};
-		C39ACBB617A8ECE500253062 /* SHXMLParser */ = {
-			isa = PBXGroup;
-			children = (
-				C39ACBB717A8ECE500253062 /* SHXMLParser.h */,
-				C39ACBB817A8ECE500253062 /* SHXMLParser.m */,
-			);
-			path = SHXMLParser;
 			sourceTree = "<group>";
 		};
 		C39ACBC017A8ECE500253062 /* RaptureXML */ = {
@@ -269,9 +248,8 @@
 				C39C359E17A7D0880014A311 /* main.m in Sources */,
 				C39C35C317A7D1360014A311 /* ViewController.m in Sources */,
 				C39C35C417A7D1360014A311 /* AppDelegate.m in Sources */,
-				C39ACBC317A8ECE500253062 /* SHXMLParser.m in Sources */,
-				C39ACBC517A8ECE500253062 /* MCRequestOperation.m in Sources */,
 				C39ACBC717A8ECE500253062 /* RXMLElement.m in Sources */,
+				C39ACBCE17A8FA2E00253062 /* MCNetworkOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
