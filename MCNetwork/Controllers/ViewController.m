@@ -6,10 +6,13 @@
 
 #import "ViewController.h"
 #import "MCNetwork.h"
+#import "RXMLElement.h"
 
 @implementation ViewController
 
 #define kRSSURLString @"http://laowaicast.rpod.ru/rss.xml"
+#define TICK   NSDate *startTime = [NSDate date]
+#define TOCK   NSLog(@"Time: %f", -[startTime timeIntervalSinceNow])
 
 /*
  * Load
@@ -50,13 +53,21 @@
 - (void)loadAsyncRSS
 {
     MCRequestOperation *operation = [MCRequestOperation initWithURLString:kRSSURLString];
-    operation.type = MCNetworkXML;
-    operation.mapping = self.rssMapping;
     operation.success = ^(MCRequestOperation *operation) {
-        NSLog(@"%@", operation.responseMapping[0][@"title"]);
-    };
-    operation.failure = ^(NSError *error) {
-        NSLog(@"Error: %@", error);
+        TICK;
+        RXMLElement *rootRSS = [RXMLElement elementFromXMLData:operation.responseData];
+        
+        NSMutableArray *result = [NSMutableArray array];
+        NSArray* items = [[rootRSS child:@"channel"] children:@"item"];
+        for (RXMLElement *item in items) {
+            [result addObject:@{
+                @"title": [item child:@"title"].text,
+                @"link": [item child:@"link"].text,
+                @"description": [item child:@"description"].text,
+            }];
+        }
+        NSLog(@"%@", result[0][@"title"]);
+        TOCK;
     };
     [operation sendAsync];
 }
@@ -80,17 +91,18 @@
 
 /*
  * Load Two Request Async
- */
+
 - (void)loadTwoRequestAsync
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         [self loadTwoRequest];
     });
 }
+ */
 
 /*
  * Load Two Request
- */
+
 - (void)loadTwoRequest
 {
     // firstURLString
@@ -114,6 +126,7 @@
     NSString *copyright = operation.responseDictionary[@"rss"][@"channel"][@"copyright"];
     NSLog(@"%@", copyright);
 }
+  */
 
 /*
  * Mapping
