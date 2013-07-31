@@ -20,9 +20,9 @@
     //[self loadSyncRSS];
     
     // Load ASync RSS
-    //[self loadAsyncRSS];
+    [self loadAsyncRSS];
     
-    [self loadJson];
+    //[self loadJson];
     
     // Load two request
     //[self loadTwoRequest];
