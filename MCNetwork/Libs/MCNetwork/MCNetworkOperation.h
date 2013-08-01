@@ -11,8 +11,8 @@ typedef enum
 } Handler;
 
 + (MCNetworkOperation *)initWithURLString: (NSString *)URLString;
-- (void)sendSync;
-- (void)sendAsync;
+- (void)startSync;
+- (void)startAsync;
 
 typedef void(^MCNetworkSuccessBlock)(MCNetworkOperation *requestOperation);
 typedef void(^MCNetworkFailureBlock)(NSError *error);

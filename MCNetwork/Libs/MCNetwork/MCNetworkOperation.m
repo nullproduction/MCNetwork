@@ -19,9 +19,9 @@
 
 
 /*
- * Send Async
+ * Start Async
  */
-- (void)sendAsync
+- (void)startAsync
 {
     // URL
     if(_URLString) _URL = [NSURL URLWithString:_URLString];
@@ -58,9 +58,9 @@
 
 
 /*
- * Send Sync
+ * Start Sync
  */
-- (void)sendSync
+- (void)startSync
 {
     // URL
     if(_URLString) _URL = [NSURL URLWithString:_URLString];
@@ -83,7 +83,7 @@
 
 
 /*
- * Handler
+ * Handlers
  */
 - (void)handlers
 {

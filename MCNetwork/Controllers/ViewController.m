@@ -41,7 +41,7 @@
 {
     MCNetworkOperation *operation = [[MCNetworkOperation alloc] init];
     operation.URLString = kRSSURLString;
-    [operation sendSync];
+    [operation startSync];
     
     NSLog(@"sendSync  - %@", operation.responseString);
 }
@@ -69,7 +69,7 @@
         NSLog(@"%@", result[0][@"title"]);
         TOCK;
     };
-    [operation sendAsync];
+    [operation startAsync];
 }
 
 
@@ -86,7 +86,7 @@
     operation.failure = ^(NSError *error) {
         NSLog(@"Error: %@", error);
     };
-    [operation sendAsync];
+    [operation startAsync];
 }
 
 /*
@@ -128,59 +128,5 @@
 }
   */
 
-/*
- * Mapping
- */
-- (NSDictionary *)rssMapping
-{
-    return @{
-     @"path": @"rss.channel.item",
-     @"attributes": @{
-             @"title": @{
-                     @"path": @"title"
-                     },
-             @"link": @{
-                     @"path": @"link"
-                     },
-             @"pubDate": @{
-                     @"path": @"pubDate",
-                     @"handler": @{
-                             @"class": @"ViewController",
-                             @"method": @"dateForRssDate:"
-                             }
-                     },
-             @"desc": @{
-                     @"path": @"description"
-                     },
-             @"enclosureUrl": @{
-                     @"path": @"enclosure.url"
-                     },
-             @"enclosureType": @{
-                     @"path": @"enclosure.type"
-                     },
-             @"enclosureLength": @{
-                     @"path": @"enclosure.length"
-                     },
-             @"duration": @{
-                     @"path": @"itunes:duration"
-                     },
-             @"imageURL": @{
-                     @"path": @"itunes:image.href"
-                     },
-             }
-     };
-}
-
-
-/*
- * Date For Rss Date
- */
-+ (NSDate *)dateForRssDate:(NSString *)rssDate
-{
-    NSString *dateFormat = @"EEE, dd MMMM yyyy HH:mm:ss Z";
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:dateFormat];
-    return [dateFormatter dateFromString:rssDate];
-}
 
 @end
