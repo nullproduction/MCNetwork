@@ -7,9 +7,6 @@
 @implementation MCNetworkOperation
 
 
-/*
- * Init with URLString
- */
 + (MCNetworkOperation *)initWithURLString: (NSString *)URLString
 {
     MCNetworkOperation *operation = [[MCNetworkOperation alloc] init];
@@ -18,10 +15,7 @@
 }
 
 
-/*
- * Start Async
- */
-- (void)startAsync
+- (void)start
 {
     // URL
     if(_URLString) _URL = [NSURL URLWithString:_URLString];
@@ -29,72 +23,45 @@
     // Request
     NSURLRequest *request = [NSURLRequest requestWithURL:_URL];
 
-    // Queue
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    
-    // Send Asynchronous Request
-    [NSURLConnection sendAsynchronousRequest:request queue:queue
-    completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-    {
-        if(!error.code)
+    // Operation
+    AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+         
+    // Success
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *requestOperation, id responseObject){
+        
+        // Data
+        _responseData = requestOperation.responseData;
+        
+        // String
+        _responseString = requestOperation.responseString;
+        
+        // JSON
+        if (_handler == MCNetworkJSON)
         {
-            // Response Data
-            _responseData = data;
-            
-            // Handlers
-            [self handlers];
-                
-            // Success
-            _success(self);
+            _responseDictionary = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:nil];
+        }
+         
+         // Success
+         _success(self);
+     }
      
-        }
-        else
-        {
-            // Failure
-            _failure(error);
-        }
+     // Failure
+    failure:^(AFHTTPRequestOperation *requestOperation, NSError *error){
+         _failure(error);
     }];
-}
-
-
-/*
- * Start Sync
- */
-- (void)startSync
-{
-    // URL
-    if(_URLString) _URL = [NSURL URLWithString:_URLString];
     
-    // Request
-    NSURLRequest *request = [NSURLRequest requestWithURL:_URL];
-    
-    // Response
-    NSURLResponse *response;
-    
-    // Error
-    NSError *error;
-    
-    // Send Synchronous Request
-    _responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
-    // Handlers
-    [self handlers];
-}
-
-
-/*
- * Handlers
- */
-- (void)handlers
-{
-    // Response String
-    _responseString = [[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding];
-    
-    // JSON
-    if (_handler == MCNetworkJSON)
+    // Progress
+    if (_progress)
     {
-        _responseDictionary = [NSJSONSerialization JSONObjectWithData:_responseData options:kNilOptions error:nil];
+        [requestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+             float progressDownload = (float)totalBytesRead / totalBytesExpectedToRead;
+             _progress(progressDownload);
+         }];
     }
+    
+    // Start
+    [requestOperation start];
 }
+
 
 @end

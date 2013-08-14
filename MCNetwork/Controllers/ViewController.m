@@ -14,42 +14,28 @@
 #define TICK   NSDate *startTime = [NSDate date]
 #define TOCK   NSLog(@"Time: %f", -[startTime timeIntervalSinceNow])
 
-/*
- * Load
- */
+
 - (void)viewDidAppear:(BOOL)animated
 {
-    // Load Sync RSS
-    //[self loadSyncRSS];
-    
-    // Load ASync RSS
-    [self loadAsyncRSS];
-    
-    //[self loadJson];
-    
-    // Load two request
-    //[self loadTwoRequest];
-    //[self loadTwoRequestAsync];
-    
+    //[self loadAsyncRSS];
+    [self loadFile];
 }
 
 
-/*
- * Load Sync RSS
- */
-- (void)loadSyncRSS
+- (void)loadFile
 {
-    MCNetworkOperation *operation = [[MCNetworkOperation alloc] init];
-    operation.URLString = kRSSURLString;
-    [operation startSync];
-    
-    NSLog(@"sendSync  - %@", operation.responseString);
+    NSLog(@"download file start");
+    NSString *URLfile = @"http://podcast.cnbc.com.edgesuite.net//OptionsAction-080913.mp4";
+    MCNetworkOperation *operation = [MCNetworkOperation initWithURLString:URLfile];
+    operation.success = ^(MCNetworkOperation *operation) {
+        NSLog(@"download file success");
+    };
+    operation.progress = ^(float progressDownload) {
+        NSLog(@"%f", progressDownload);
+    };
+    [operation start];
 }
 
-
-/*
- * Load Async RSS
- */
 - (void)loadAsyncRSS
 {
     MCNetworkOperation *operation = [MCNetworkOperation initWithURLString:kRSSURLString];
@@ -69,64 +55,7 @@
         NSLog(@"%@", result[0][@"title"]);
         TOCK;
     };
-    [operation startAsync];
+    [operation start];
 }
-
-
-/*
- * Load JSON
- */
-- (void)loadJson
-{
-    MCNetworkOperation *operation = [MCNetworkOperation initWithURLString:@"http://itunes.apple.com/ru/rss/toppodcasts/limit=300/json"];
-    operation.handler = MCNetworkJSON;
-    operation.success = ^(MCNetworkOperation *operation) {
-        //NSLog(@"%@", operation.responseDictionary);
-    };
-    operation.failure = ^(NSError *error) {
-        NSLog(@"Error: %@", error);
-    };
-    [operation startAsync];
-}
-
-/*
- * Load Two Request Async
-
-- (void)loadTwoRequestAsync
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-        [self loadTwoRequest];
-    });
-}
- */
-
-/*
- * Load Two Request
-
-- (void)loadTwoRequest
-{
-    // firstURLString
-    NSString *firstURLString = @"https://itunes.apple.com/lookup?id=669974469";
-
-    // First request
-    MCRequestOperation *operation = [MCRequestOperation initWithURLString:firstURLString];
-    operation.type = MCNetworkJSON;
-    [operation sendSync];
-    
-    // secondURLString
-    NSString *secondURLString = operation.responseDictionary[@"results"][0][@"feedUrl"];
-    NSLog(@"%@", secondURLString);
-    
-    // Second request
-    operation.URLString = secondURLString;
-    operation.type = MCNetworkXML;
-    [operation sendSync];
-    
-    // Copyright
-    NSString *copyright = operation.responseDictionary[@"rss"][@"channel"][@"copyright"];
-    NSLog(@"%@", copyright);
-}
-  */
-
 
 @end

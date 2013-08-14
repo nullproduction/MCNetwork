@@ -2,6 +2,8 @@
 //  MCNetworkOperation.h
 //
 
+#import "AFNetworking.h"
+
 @interface MCNetworkOperation : NSObject
 
 typedef enum
@@ -11,11 +13,11 @@ typedef enum
 } Handler;
 
 + (MCNetworkOperation *)initWithURLString: (NSString *)URLString;
-- (void)startSync;
-- (void)startAsync;
+- (void)start;
 
 typedef void(^MCNetworkSuccessBlock)(MCNetworkOperation *requestOperation);
 typedef void(^MCNetworkFailureBlock)(NSError *error);
+typedef void(^MCNetworkProgressBlock)(float progressDownload);
 
 @property (nonatomic, retain) NSURL *URL;
 @property (nonatomic, retain) NSString *URLString;
@@ -25,5 +27,6 @@ typedef void(^MCNetworkFailureBlock)(NSError *error);
 @property (nonatomic, readwrite) Handler handler;
 @property (nonatomic, copy) MCNetworkSuccessBlock success;
 @property (nonatomic, copy) MCNetworkFailureBlock failure;
+@property (nonatomic, copy) MCNetworkProgressBlock progress;
 
 @end
